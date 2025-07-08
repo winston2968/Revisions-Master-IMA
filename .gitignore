@@ -4,11 +4,15 @@ fiche/
 fiche/*
 fiche/chapitres 
 fiche/chapitres/*
+fiche/chapitres/Probas/
+fiche/chapitres/Probas/*
 
 # Keep sources and pdf 
 !fiche
 !fiche/chapitres 
 !fiche/chapitres/*.tex
+!fiche/chapitres/Probas
+!fiche/chapitres/Probas/*.tex
 !fiche/*.tex
 !fiche/*.pdf
 !fiche/images/

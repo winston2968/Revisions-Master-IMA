@@ -1,4 +1,4 @@
-\documentclass{report}
+\documentclass{book}
 
 
 % ==================================================================================================================================
@@ -28,35 +28,34 @@
 \usepackage{titlepic}
 \usepackage{fancyhdr}
 \usepackage{caption}
-\usepackage{xcolor} % pour les couleurs
-\usepackage[linkbordercolor=white]{hyperref} % après avoir chargé xcolor
+\usepackage{xcolor}
+\usepackage[linkbordercolor=white]{hyperref}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 \usepackage{listings}
 \usepackage{tikz}
+\usepackage{tkz-graph}
+\usepackage{pgfplots}
 \usepackage{mdframed}
-\usepackage{xparse} % Nécessaire pour définir des environnements avec arguments optionnels
+\usepackage{xparse}
+\usepackage{enumitem}
+\usepackage{titlesec}
 \usepackage[top=3cm, bottom=3cm, left=3.5cm, right=3.5cm]{geometry}
-\usepackage{needspace} % Pour éviter le fractionnement des environnnements
-% \usepackage{parskip} % Désactive l'indentation des pragraphes et rajoute un espace entre deux 
-\usetikzlibrary{patterns, automata, positioning} % Pour utiliser les motifs
-\usepackage{tocloft} % Permet de personnaliser le sommaire
-\usepackage{minitoc} % Pour les mini tables des matières
-\usepackage{forest} % Pour les arbres de dérivation
+\usepackage{etoolbox} % pour tester la présence d'un argument optionnel
+
+% \pagestyle{empty}
+
+\usetikzlibrary{cd}
+\usetikzlibrary{patterns}
+\usetikzlibrary{angles,quotes}
+\usetikzlibrary{intersections, 3d, calc}
+
+\usepgfplotslibrary{fillbetween}
 
 
-
-% \setcounter{secnumdepth}{-1} % Désactive le compteur des parties
-\setcounter{tocdepth}{1} % Affiche uniquement les sections dans le sommaire principal
-\dominitoc % Active les sommaires locaux
-
-% Rediriger les fichiers auxiliaires de minitoc dans un dossier "aux/"
-\makeatletter
-\def\MTCTemp#1{aux/#1}
-\makeatother
-
-% PAGE SETTINGS
-
+% - - - - - - - - - - - - - - - - - - - - - - - - - 
+%                   PAGE SETTINGS
+% - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 \setlength{\columnseprule}{1pt}               % ligne de séparation entre les colonnes
 \def\columnseprulecolor{\color{black}}
@@ -65,8 +64,29 @@
 \cellspacetoplimit=5pt                        % de la séparation entre colonnes
 \cellspacebottomlimit=5pt
 
+\renewcommand{\thechapter}{\arabic{chapter}}  % Set chapters numbers to 0
 
-% MATHS SHORTHANDS
+% Redéfinition de \part avec image optionnelle
+\renewcommand{\part}[2][]{%
+  \clearpage
+  \refstepcounter{part} % incrémente le compteur de partie
+  \addcontentsline{toc}{part}{\thepart\space #2} % ajoute au sommaire
+
+  \begin{center}
+    {\Huge\bfseries #2\par}
+    \vspace{4em}  % Augmente l'écart à 2em
+    \ifstrempty{#1}{}{%
+      \includegraphics[width=0.4\textwidth]{#1}\par
+    }
+  \end{center}
+  \vspace{2em}
+}
+
+
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - 
+%                 MATHS SHORTHANDS
+% - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\R}{\mathbb{R}}
@@ -75,14 +95,27 @@
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\U}{\mathbb{U}}
 \newcommand{\K}{\mathbb{K}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\V}{\mathbb{V}}
+\newcommand{\Lc}{\mathbb{L}}
+\newcommand{\Fc}{\mathbb{F}}
+
 \newcommand{\M}{\mathcal{M}}
 \newcommand{\B}{\mathcal{B}}
+\newcommand{\F}{\mathcal{F}}
 
-\let\oldphi\phi % Sauvegarder l'ancienne définition de \phi
-\renewcommand{\phi}{\varphi} % Redéfinir \phi pour qu'il affiche \varphi
+%\renewcommand{\epsilon}{\varepsilon}
+%\renewcommand{\phi}{\varphi}
+%\renewcommand{\rho}{\varrho}
+
+\renewcommand{\labelitemi}{\textbullet} % Utiliser des points noirs (•)
+
+\newcommand{\myP}{\mathbb{P}}
 
 
-% MOD NOTATION
+% - - - - - - - - - - - - - - - - - - - - - - - - - 
+%                 MODS NOTATION
+% - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 \theorembodyfont{\upshape}
 
@@ -173,6 +206,37 @@
 }
 
 
+% - - - - - - - - - - - - - - - - - - - - - - - - - 
+%             Itemize env settings
+% - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+\setlist[itemize,1]{label=\textbullet}
+\setlist[itemize,2]{label=\textbullet}
+\setlist[itemize,3]{label=\textbullet}
+\setlist[itemize,4]{label=\textbullet}
+
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - 
+%             Tableofcontents settings
+% - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
+% % Profondeur des mini-tables des matières
+% \setcounter{minitocdepth}{2}  % Jusqu’aux sous-sections
+% \setcounter{parttocdepth}{1}  % Jusqu’aux chapitres dans les parties
+
+% % Configurer l’apparence
+% \mtcsetrules{minitoc}{off}  % Désactiver les lignes pour les chapitres
+% \mtcsetrules{parttoc}{off}   % Désactiver les lignes pour les parties
+
+% % Si tu veux que la table principale n'affiche que les parties :
+% \setcounter{tocdepth}{-1}  % N'afficher que les \part dans la table principale
+
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - 
+%                       TITLE
+% - - - - - - - - - - - - - - - - - - - - - - - - - 
+
 
 % ==================================================================================================================================
 % Setting Title 
@@ -202,7 +266,9 @@
 \setlength{\parindent}{0pt}
 
 % Inclusion des chapitres 
-\include{chapitres/chapitre1}
+\include{chapitres/chapitre1_Probas}
+\include{chapitres/chapitre2_Optimisation}
+\include{chapitres/chapitre3_Simulation_Statistique}
 
 
 \end{document}

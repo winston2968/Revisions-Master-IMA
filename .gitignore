@@ -1,0 +1,15 @@
+
+# Exclure all files 
+fiche/
+fiche/*
+fiche/chapitres 
+fiche/chapitres/*
+
+# Keep sources and pdf 
+!fiche
+!fiche/chapitres 
+!fiche/chapitres/*.tex
+!fiche/*.tex
+!fiche/*.pdf
+!fiche/images/
+!fiche/images/*

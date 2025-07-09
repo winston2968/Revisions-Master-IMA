@@ -1,0 +1,250 @@
+\chapter{Convergence de Suite de Variables Aléatoires}
+
+\justify
+
+\setlength{\parindent}{0pt}
+\renewcommand{\labelitemi}{\textbullet} % Utiliser des points noirs (•)
+
+% ==================================================================================================================================
+% Introduction 
+
+Dans ce chapitre nous considérons un espace probabilisé $(\Omega, \mathcal{F}, \myP)$ où toutes les variables 
+aléatoires sont discrètes ou à densité. 
+
+% ==================================================================================================================================
+% Suites de variables aléatoires 
+
+\section{Suites de variables aléatoires}
+
+\subsection{Généralités}
+
+Commençons tout d'abord par définir formellement les suites de variables aléatoires et étudions quelques-unes 
+de leurs propriétés. 
+
+\begin{definition}[Suite de variables aléatoires]
+    Soit $(\Omega, \mathcal{F}, \myP)$ un espace probabilisé. On appelle suite de variables 
+    aléatoires une suite $(X_n)_{n \in \N}$ telle que :
+        \[ \forall n \in \N, \quad X_n : 
+            \begin{cases}
+                \Omega \longrightarrow E \\ 
+                \omega \longmapsto X(\omega)
+            \end{cases} \text{ est une fonction mesurable} \] 
+    Dans le cas où $E = \R$ on parlera de suite de variables aléatoires réelles. 
+\end{definition}
+
+
+\begin{definition}[Suite i.i.d.]
+    Soit $(X_n)_{n \in \N}$ une suite de variables aléatoires définies sur un espace probabilisé 
+    $(\Omega, \mathcal{F}, \myP)$. 
+    
+    \begin{itemize}
+        \item On dit que la suite est \emph{identiquement distribuée} si toutes les variables $X_n$ ont la même loi :
+        \[ \forall n \in \N, \quad X_n \sim \mathcal{L}. \]
+        
+        \item On dit que les variables sont \emph{indépendantes} si, pour tout $n \in \N$ et tout $(A_1, \dots, A_n) \in \mathcal{B}_\R$, on a :
+        \[ \myP\left( \bigcap_{k = 1}^{n} \{ X_k \in A_k \} \right) = \prod_{k = 1}^{n} \myP(X_k \in A_k) \]
+        (Cette condition traduit l'indépendance des variables aléatoires en termes de lois de distribution.)
+    \end{itemize}
+    
+    \medskip
+    
+    Lorsque $(X_n)$ est à la fois indépendante et identiquement distribuée, on dit que c’est une suite \emph{i.i.d.} (independent and identically distributed).
+\end{definition}
+
+Les suites de variables aléatoires sont très utiles en modélisation. En effet elles peuvent servir à : 
+\begin{itemize}
+    \item La modélisation d'une expérience répétée : comme $n$ lancers d'une pièce de monnaie ou $n$ relevés de température. 
+    \item Relever des séquences de mesures aléatoires : en statistiques, on collecte souvent des données issues d'un même échantillon 
+    aléatoire via le processus d'échantillonnage. Cela revient à considérer une suite de variables aléatoires 
+    $(X_n)_{n \in \N}$ telle que les $X_n$ sont : 
+        \begin{itemize}
+            \item définies sur un même espace probabilisé 
+            \item souvent identiquement distribuées 
+            \item et indépendantes
+        \end{itemize}
+\end{itemize}
+
+\begin{example}[Simple]
+    Considérons l'expérience aléatoire de $n$ lancés d'une pièce équilibrée non truquée. 
+    On a alors $ \Omega = \{\text{ Pile}, \text{ Face}\} = \{p,f\}$ et soit la suite de variables 
+    aléatoires $(U_n)_{n \in \N}$ définie sur $(\Omega, \mathcal{F}, \myP)$ telle que :
+        \[ U_n = 
+            \begin{cases}
+                0 \quad \text{si le nième lancer donne Pile} \\ 
+                1 \quad \text{si le nième lancer donne Face} \\ 
+            \end{cases}
+        \]
+    Alors $(U_n)_(n \in \N)$ est une suite de variables aléatoires de Bernouilli ($ \mathcal{B}(1/2)$), 
+    indépendantes et identiquement distribuées. 
+\end{example}
+
+
+\subsection{Exemple Introductif : lancer d'une pièce}
+
+Reprenons un exemple classique : le lancer d’une pièce de monnaie. Soit $(X_n)_{n \in \N^*}$ une suite 
+de variables aléatoires modélisant les résultats successifs d’un tel lancer. On modélise l’espace probabilisé 
+par l'univers : $\Omega = \{s, \overline{s}\}^{\N^*} $ où $s$ désigne un « succès » (par exemple, pile) 
+et $\overline{s}$ un « échec » (face), et où chaque élément $\omega \in \Omega$ est une suite infinie de 
+résultats.
+
+On suppose que les $X_n$ sont des variables de Bernoulli de paramètre $p \in [0,1]$ :
+    \[
+        \forall n \in \N^*,\quad \mathbb{P}(X_n = 1) = p \quad \text{et} \quad \mathbb{P}(X_n = 0) = 1 - p.
+    \]
+Cela signifie que chaque lancer est indépendant des précédents, et a une probabilité $p$ de donner $1$ (succès).
+
+\vspace{0.3cm}
+
+Considérons la variable aléatoire suivante :
+    \[
+        X_n := \frac{1}{n} \sum_{k=1}^n X_k.
+    \]
+Elle représente la fréquence de succès (i.e. de « pile ») parmi les $n$ premiers lancers.
+Intuitivement, on s’attend à ce que cette fréquence se rapproche de $p$ quand $n$ devient grand. 
+C’est ce que l’on veut exprimer par une notion de convergence.
+
+\vspace{0.3cm}
+
+Mais si l'on regarde certaines suites particulières $\omega \in \Omega$, par exemple :
+\begin{itemize}
+    \item $\omega_1 = (1,1,1,1,\dots)$,
+    \item $\omega_2 = (0,0,0,0,\dots)$,
+    \item $\omega_3 = (0,1,1,0,1,1,0,1,1,\dots)$ (suite périodique),
+\end{itemize}
+
+on obtient :
+\[
+    \lim_{n \to \infty} X_n(\omega_1) = 1, \quad 
+    \lim_{n \to \infty} X_n(\omega_2) = 0, \quad 
+    \lim_{n \to \infty} X_n(\omega_3) = \frac{2}{3}.
+\]
+
+Ces valeurs ne sont pas égales à $p$ en général.
+Autrement dit, la convergence point par point (c’est-à-dire pour chaque $\omega$ fixé) ne suffit pas à garantir que $X_n(\omega) \to p$.
+
+\vspace{0.3cm}
+
+Il va donc nous falloir introduire des notions de convergence plus fines, adaptées aux variables aléatoires, 
+qui prennent en compte la structure probabiliste de l’espace. Cela nous amène aux différentes formes de 
+convergence en probabilité. Ces outils permettent de formaliser ce que signifie réellement « $X_n$ tend 
+vers $p$ » dans un contexte probabiliste.
+
+% ==================================================================================================================================
+% Convergence en probabilités
+
+\section{Convergence en Probabilités}
+
+\begin{definition}[Convergence en Probabilités]
+    Soit $(X_n)_{n \in \N}$ une suite de variables aléatoires et $X$ une variable aléatoire sur un 
+    même espace probabilisé $(\Omega, \mathcal{F}, \myP)$. On dit que la suite $(X_n)_{n \in \N}$ 
+    \emph{converge en probabilité} vers la variable $X$ si : 
+        \[ \forall \varepsilon > 0, \quad \lim_{n\to\infty} \myP(|X_n - X| > \varepsilon) = 0 \] 
+    on note alors : $ X_n \overset{\myP}{\longrightarrow} X$. 
+\end{definition}
+
+Intuitivement, cela signifie que plus $n$ est grand, plus la probabilité que $X_n$ s'écarte significativement 
+de la limite $X$ devient faible. En d'autres termes, les réalisations de $X_n$ deviennent, avec une 
+probabilité croissante, arbitrairement proches de celles de $X$.
+
+\subsection{Opérations}
+
+\begin{prop}[Convergence en probabilités et somme]
+    Soient deux suites de variables aléatoires $(X_n)_{n \in \N}$ et $(Y_n)_{n \in \N}$ telles que 
+    $X_n \overset{\myP}{\longrightarrow} X$ et $ Y_n \overset{\myP}{\longrightarrow} Y$ on a alors : 
+        \[ X_n + Y_n \overset{\myP}{\longrightarrow} X + Y \] 
+\end{prop}
+
+\begin{prop}[Convergence en probabilités et application continue]
+    Soient une suite de variables aléatoires $(X_n)_{n \in \N}$ et $f : \R \longrightarrow \R$ une application 
+    continue telles que $X_n \overset{\myP}{\longrightarrow} X$ alors, on a : 
+        \[ f(X_n) \overset{\myP}{\longrightarrow} f(X) \] 
+\end{prop}
+
+\subsection{Inégalités utiles et loi faible des grands nombres}
+
+Pour effectuer des calculs et calculer des convergences en probabilités, deux inégalités sont très utiles. 
+
+\begin{proposition}[Inégalité de Markov]
+    Soit $X$ une variable aléatoire \textbf{positive} sur un espace probabilisé $(\Omega, \mathcal{F}, \myP)$ 
+    admettant une espérance, alors : 
+        \[ \forall a > 0, \quad \myP (X \geqslant a) \leqslant \frac{\E(X)}{a}  \] 
+\end{proposition}
+
+\begin{proposition}[Inégalité de Bienaymé-Tchebychev]
+    Soit $X$ une variable aléatoire admettant une variance, alors : 
+        \[ \forall \varepsilon > 0, \quad \myP(|X - \E(X)| \geqslant \varepsilon) \leqslant \frac{V(X)}{\varepsilon^2} \] 
+\end{proposition}
+
+\begin{theorem}[Loi faible des grands nombres (version de Khinchine)]
+    Soit $(X_n)_{n \in \N}$ une suite de variables aléatoires réelles, indépendantes, identiquement 
+    distribuées (i.i.d), admettant une espérance $\mu = \E(X_1) < \infty$.
+
+    Alors, la moyenne empirique :
+    \[
+        \bar{X}_n = \frac{1}{n} \sum_{k=1}^{n} X_k
+    \]
+    converge en probabilité vers $\mu$ :
+    \[
+        \bar{X}_n \overset{\mathbb{P}}{\longrightarrow} \mu.
+    \]
+\end{theorem}
+
+Autrement dit, en répétant une même expérience aléatoire de manière indépendante, la moyenne des résultats 
+observés finit par se rapprocher, avec une forte probabilité, de la moyenne théorique. 
+C’est le fondement des statistiques empiriques.
+
+\begin{corollary}[Théorème d'or de Bernouilli]
+    Soit $(X_n)_{n \in \N}$ une suite de variables aléatoires de Bernouilli de même paramètre $p$. 
+    Alors la moyenne empirique converge en probabilités vers $p$. 
+    \[ \text{i.e} \quad \overline{X_n} = \frac{1}{n} \sum_{k=1}^{n} X_k \overset{\myP}{\longrightarrow} p \] 
+\end{corollary}
+
+
+
+C’est une version particulière de la loi faible des grands nombres appliquée à une variable de Bernoulli. 
+Elle justifie l’interprétation fréquentiste des probabilités. Cela nous permet de dire que la fréquence statistique d'un évènement tend vers sa probabilité. 
+Par exemple, si l’on répète un tirage « pile ou face » (avec $p = 0{,}5$) un grand nombre de fois, 
+la proportion de « pile » obtenue se rapproche de $0.5$ avec une forte probabilité.
+
+
+\section{Convergence Presque Sûre}
+
+Le modèle de convergence presque sûre s'appuie sur le fait que l'on va négliger le résultat d'évènements de 
+probabilité nulle dans le calcul de la convergence. 
+En effet, dans l'exemple d'introduction, nous contredisons notre hypothèse grâce à des évènnements qui sont 
+en réalité presque impossible à réaliser. La probabilité qu'ils se produisent est presque nulle, on peut donc 
+ne pas les considérer. C'est ce que va nous permettre la convergence presque sûre. 
+
+\begin{definition}[Convergence presque sûre]
+    Soit $(X_n)_{n \in \N}$ une suite de variables aléatoires définies sur un espace probabilisé $(\Omega, \mathcal{F}, \myP)$, et soit $X$ une variable aléatoire.
+    On dit que $(X_n)$ \emph{converge presque sûrement} vers $X$ si :
+    \[ \myP(\{ \omega \in \Omega, \lim_{n\to\infty} X_n(\omega) = X(\omega)\}) = 1\] 
+    Autrement dit, il existe un ensemble $A \subset \Omega$ de probabilité $1$ tel que, pour tout $\omega \in A$, on ait $X_n(\omega) \to X(\omega)$.
+
+    On note alors : \[ X_n \xrightarrow[n \to \infty]{\text{p.s.}} X \quad \text{ou} \quad X_n \overset{\text{p.s.}}{\longrightarrow} X \]
+\end{definition}
+
+Cela signifie que presque tous les scénarios de $\Omega$ (sauf un ensemble négligeable de probabilité nulle)
+voient la suite $(X_n)_{n \in \N}$ tendre vers $X$. 
+
+\begin{prop}[Comparaison]
+    La convergence presque sûre est plus forte que la convergence en probabilités. 
+    Soient une suite de variables aléatoires $(X_n)_{n \in \N}$ et une variable aléatoire $X$ on a alors : 
+        \[ X_n \overset{p.s}{\longrightarrow} X \Longrightarrow X_n \overset{\myP}{\longrightarrow} X \] 
+    La réciproque est en général fausse. 
+\end{prop}
+
+
+\subsection{Convergence Presque Sûre et Opérations}
+
+\begin{prop}[Stabilité par somme et produit]
+    Soient $(X_n)$ et $(Y_n)$ deux suites de variables aléatoires telles que $X_n \overset{p.s.}{\longrightarrow} X$ 
+    et $Y_n \overset{p.s.}{\longrightarrow} Y$. On a alors : 
+        \[ X_n + Y_n \overset{p.s.}{\longrightarrow} X + Y \quad \text{et} \quad X_n \times Y_n \overset{p.s.}{\longrightarrow} X \times Y \]
+\end{prop}
+
+\begin{prop}[Convergence presque sûre et application continue]
+    Soient une suite de variables aléatoires $(X_n)_{n \in \N}$ et $f : \R \longrightarrow \R$ une application 
+    continue telles que $X_n \overset{p.s.}{\longrightarrow} X$ alors, on a : 
+        \[ f(X_n) \overset{p.s.}{\longrightarrow} f(X) \] 
+\end{prop}

@@ -9,12 +9,6 @@
 % Introduction 
 
 % TODO : 
-%     - Revoir définition variable aléatoire : https://mathieu-mansuy.fr/pdf/MP2I-Chapitre29.pdf 
-%     - Déplacer lois d'une variable dans ce chapitre 
-%     - Ajouter définition support 
-%     - Rajouter propriétés vues dans le cours en ligne 
-%     - Définition variables iid 
-%     - Rajouter une partie indépendance 
 
 
 % ==================================================================================================================================
@@ -89,7 +83,13 @@ Elle est dont "plus complète" que $\Omega$, on retrouve les propriétés des es
     \end{enumerate}
 \end{remark}
 
-\section{Variable Aléatoire}
+
+
+% ==================================================================================================================================
+% Variables Aléatoires
+
+
+\section{Variables Aléatoires}
 
 \subsection{Définition et Loi}
 
@@ -101,33 +101,44 @@ les variables aléatoires.
 
     \vspace{0.5cm}
 
-    Plus formellement, une variable aléatoire $X$ sur un espace probabilisé $(\Omega, \mathcal{F}, \myP)$ 
-    est une fonction $ X : \Omega \longrightarrow \R$ telle que, pour tout ensemble $B \in \mathcal{B}_\R$ (tribu borélienne), 
-    on ait $X^{-1} (B) \subset \mathcal{F}$. 
-
-    \vspace{0.5cm}
-
-    On définit l'ensemble des valeurs possibles de la variable aléatoire comme l'image de $\Omega$ par $X$ noté $X(\Omega)$. 
+    Plus formellement, soit $(\Omega, \mathcal{F}, \myP)$ un espace probabilisé et $E$ un ensemble. 
+    Une \emph{variable aléatoire $X$ sur $\Omega$ à valeurs dans $E$} est une fonction mesurable $X : \Omega \longrightarrow E$. 
+    Dans le cas où $E = \R$ on parlera de \emph{variable aléatoire réelle}. 
 \end{definition}
 
 La mesurabilité d'une variable aléatoire permet donc garantir que les évènements associés aux valeurs de la variable 
 aléatoire sont bien mesurables par la mesure de probabilité. 
 
-\vspace{0.5cm}
+\begin{definition}[Support]
+    Soit $X$ une variable aléatoire sur un univers $\Omega$ dans $\R$. 
+    On appelle \emph{support de $X$} l'image directe de $\Omega$ par $X$, autrement dit, 
+    l'ensemble $X(\Omega) = \{X(\omega) \; | \; \omega \in \Omega\}$. Il correspond à l'ensemble 
+    des valeurs prises par $X$.  
+\end{definition}
 
-Maintenant que nous avons définit formellement le concept de variable aléatoire, on peut lier cette définition 
-à celle des évènements. En effet, une variable aléatoire est une fonction mesurable sur un espace probabilisé $(\Omega, \mathcal{F}, \myP)$
-telle que : 
-    \[ X : \Omega \longrightarrow \R \quad \forall B \in \mathcal{B}_\R, X^{-1} (B) \subset \mathcal{F} \] 
-On peut alors caractériser un évènement $A$ comme la préimage d'un sous-ensemble de $\R$ par $X$ de la façon suivante. 
-    \[ A = X^{-1}(B) \; \text{pour un certain} \; B \in \mathcal{B}_\R \] 
-D'où la définition suivante...
+Le support d'une variable aléatoire $X : \Omega \longrightarrow E$ est un ensemble fini car $\Omega$ est 
+lui-même un ensemble fini par hypothèse.
+
+\begin{proposition}
+    La définition de variable alétoire comme fonction mesurable nous permet de définir formellement 
+    le notion d'évènement d'une expérience aléatoire. En effet, considérons une variable aléatoire $X : \Omega \longrightarrow E$ 
+    définie sur un espace probabilisé $(\Omega, \mathcal{F}, \myP)$ et soit $ \mathcal{B}$ une tribu sur $E$. 
+
+    Puisque $X$ est une fonction mesurable, on sait que : 
+        \[ \forall B \in \mathcal{B}, X^{-1}(B) \in \mathcal{F} \] 
+    \emph{(i.e toute préimage d'un borélien est un borélien)} 
+    On va donc définir un évènement d'une expérience aléatoire comme la préimage d'un élément de $ \mathcal{B}$. 
+    D'où la définition suivante...
+\end{proposition}
 
 \begin{definition}[Evènement d'une expérience aléatoire]
-    Soit $X$ une variable aléatoire réelle définie sur un univers $\Omega$. 
-    On appelle évènement $[X = x]$ de l'expérience aléatoire l'ensemble des issues possibles correspondant à cet évènement $x \in \R$ . 
+    Soit $X$ une variable aléatoire définie sur un univers $\Omega$ à valeurs dans $E$. 
+    On appelle évènement $[X = x]$ de l'expérience aléatoire l'ensemble des issues possibles 
+    correspondant à cet évènement $x \in E$ . 
     Autrement dit :
         \[ [X = x] = \{w \in \Omega \; | \; X(\omega) = x\} = X^{-1}(x) \] 
+    Plus généralement soit $A \in \mathcal{B}$ une tribu sur $E$, 
+        \[ [X \in A] = \{ \omega \in \Omega \; | \; X(\omega) \in A \} = X^{-1}(A) \] 
 \end{definition}
 
 \begin{definition}[Loi]
@@ -198,3 +209,12 @@ Nous allons maintenant étudier les deux grands types de lois de probabilité se
     \item Dans le cas discret : lois binomiale, géométrique, de Poisson...
     \item Dans le cas continu : loi uniforme, loi exponentielle, loi normale...
 \end{itemize}
+
+
+% ==================================================================================================================================
+% Indépendance de Variables aléatoires
+
+
+\section{Indépendance de variables aléatoires}
+
+% TODO : fill-in 

@@ -46,9 +46,7 @@ de leurs propriétés.
         (Cette condition traduit l'indépendance des variables aléatoires en termes de lois de distribution.)
     \end{itemize}
     
-    \medskip
-    
-    Lorsque $(X_n)$ est à la fois indépendante et identiquement distribuée, on dit que c’est une suite \emph{i.i.d.} (independent and identically distributed).
+    Lorsque $(X_n)$ est à la fois indépendante et identiquement distribuée, on dit que c’est une suite \emph{i.i.d.}
 \end{definition}
 
 Les suites de variables aléatoires sont très utiles en modélisation. En effet elles peuvent servir à : 
@@ -74,7 +72,7 @@ Les suites de variables aléatoires sont très utiles en modélisation. En effet
                 1 \quad \text{si le nième lancer donne Face} \\ 
             \end{cases}
         \]
-    Alors $(U_n)_(n \in \N)$ est une suite de variables aléatoires de Bernouilli ($ \mathcal{B}(1/2)$), 
+    Alors $(U_n)_{n \in \N}$ est une suite de variables aléatoires de Bernouilli $ \mathcal{B}(1/2)$, 
     indépendantes et identiquement distribuées. 
 \end{example}
 
@@ -207,6 +205,9 @@ Par exemple, si l’on répète un tirage « pile ou face » (avec $p = 0{,}5$) 
 la proportion de « pile » obtenue se rapproche de $0.5$ avec une forte probabilité.
 
 
+% ==================================================================================================================================
+% Convergence Presque Sûre
+
 \section{Convergence Presque Sûre}
 
 Le modèle de convergence presque sûre s'appuie sur le fait que l'on va négliger le résultat d'évènements de 
@@ -248,3 +249,197 @@ voient la suite $(X_n)_{n \in \N}$ tendre vers $X$.
     continue telles que $X_n \overset{p.s.}{\longrightarrow} X$ alors, on a : 
         \[ f(X_n) \overset{p.s.}{\longrightarrow} f(X) \] 
 \end{prop}
+
+
+\subsection{Loi forte des grands nombres}
+
+\begin{theorem}[Loi forte des grands nombres]
+    Soit $(X_n)_{n \in \N^*}$ une suite de variables aléatoires \emph{i.i.d} d'espérance finie $ \mu = \E(X_1) $. 
+    Alors la moyenne empirique converge \emph{presque sûrement} vers $\mu$ : 
+        \[ \boxed{\overline{X_n} = \frac{1}{n} \sum_{k=1}^{n} X_k \underset{n \to \infty}{\overset{p.s}{\longrightarrow}} \mu} \] 
+\end{theorem}
+
+Ainsi lorsque l'on répète beaucoup de fois la même expérience aléatoire dans les mêmes conditions (hypothèse \emph{i.i.d})
+la moyenne empirique des expériences successives tend vers la moyenne théorique (espérance) de façon 
+quasi-certaine. 
+
+
+% ==================================================================================================================================
+% Convergence en Loi
+
+\section{Convergence Loi}
+
+En probabilités, il serait utile de pouvoir approcher asymptotiquement certaines lois par d'autres plus simples
+pour simplifier les calculs mais aussi le nomre de paramètres à prendre en compte. 
+Pour cela, nous devons définir un nouveau type de convergence, la convergence en loi. 
+
+\begin{definition}[Convergence en loi]
+    Soit $(X_n)_{n \in \N^*}$ une suite de variables aléatoires et $X$ une variable aléatoire. 
+    On dit que \emph{$(X_n)$ converge en loi vers $X$} s’il existe convergence simple des fonctions de répartition :
+    \[
+        \forall x \in \R \text{ tel que } F_X \text{ est continue en } x, \quad 
+        F_{X_n}(x) \xrightarrow[n \to \infty]{} F_X(x)
+    \]
+    où $F_{X_n}$ désigne la fonction de répartition de $X_n$, et $F_X$ celle de $X$.  
+
+    On note alors : \( X_n \xrightarrow{\mathcal{L}} X \).
+
+    Concrètement, cela signifie que la loi de $X_n$ devient proche de celle de $X$ lorsque $n$ devient grand.
+\end{definition}
+
+\begin{example}
+    Soit $X_n \sim \mathcal{B}(n, \frac{\lambda}{n})$, alors : 
+        \[ X_n \overset{ \mathcal{L}}{\longrightarrow} \mathcal{P}(\lambda) \] 
+    Asymtotiquement, une loi binomiale peut être approchée par une loi de poisson, plus simple...
+\end{example}
+
+\subsection{Propriétés Fondamentales}
+
+\begin{prop}[Lien avec la convergence en probabilités]
+    Soient $(X_n)_{n \in \N^*}$ une suite de variables aléatoires et $X$ une variable aléatoire. 
+    On a alors : 
+        \[ \text{si } X_n \overset{\myP}{\longrightarrow} \text{ alors } X_n \overset{ \mathcal{L}}{\longrightarrow} X \] 
+        La convergence en probabilités implique la convergence en loi. La réciproque est fausse en général. 
+\end{prop}
+
+\begin{prop}[Stabilité]
+    Soient $(X_n)_{n \in \N^*}$ une suite de variables aléatoires, $X$ une variable aléatoire toutes deux à valeurs 
+    dans $E$ et $f : E \longrightarrow F$ une fonction continue. 
+    Alors : 
+        \[  X_n \overset{ \mathcal{L}}{\longrightarrow} X \; \Longrightarrow \; f(X_n) \overset{ \mathcal{L}}{\longrightarrow} f(X) \] 
+    La convergence en loi est donc stable par fonction continue. 
+\end{prop}
+
+% ==================================================================================================================================
+% Tableau Récapitulatif
+
+\section{Tableau Récapitulatif}
+
+\begin{remark}[Hiérarchie des convergences]
+    On a les implications suivantes entre les modes de convergence :
+    \[
+        X_n \xrightarrow[\text{p.s.}]{} X \quad \Longrightarrow \quad X_n \xrightarrow[\mathbb{P}]{} X \quad \Longrightarrow \quad X_n \xrightarrow[\mathcal{L}]{} X
+    \]
+    Les réciproques sont en général fausses.
+\end{remark}
+
+
+% ==================================================================================================================================
+% Théorème Central Limite
+
+\newpage
+\section{Théorème Central Limite}
+
+\subsection{Exemple Introductif}
+
+Pour introduire le Théorème Central Limite, penchons nous tout d'abord sur un exemple simple : le lancer d'une pièce de monnaie. 
+Considérons le lancer d'une pièce de monnaie équilibrée. Nous avons deux issues possibles : Pile ou Face 
+de probabilité $1/2$ chacune. Effectuons plusieurs lancers successifs et calculons la probabilité 
+de la somme de chaque série de lancer possible. 
+
+\vspace{0.3cm}
+
+Si nous effectuons un seul lancer, nous avons seulement deux possibilités : 
+
+\begin{center}
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \captionof{table}{Résultat d'un seul tirage}
+        \begin{tabular}{c|c}
+            \textbf{Résultat Tirage} & \textbf{Somme} \\
+            \hline 
+            0 & 0 \\ 
+            1 & 1 \\ 
+        \end{tabular}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.45\textwidth}
+        \centering
+        \captionof{table}{Fréquences pour un tirage}
+        \begin{tabular}{c|c}
+            \textbf{Somme} & \textbf{Fréquence} \\
+            \hline 
+            0 & 0.5 \\ 
+            1 & 0.5 \\ 
+        \end{tabular}
+    \end{minipage}
+\end{center}
+
+En effectuant deux lancers, nous avons maintenant 4 issues possibles de l'expérience aléatoire : 
+
+\begin{center}
+    \begin{tabular}{c|c|c}
+        \textbf{Résultat Tirage n°1} & \textbf{Résultat Tirage n°1} & \textbf{Somme} \\
+        \hline 
+        0 & 0 & 0 \\
+        0 & 1 & 1 \\  
+        1 & 0 & 1 \\
+        1 & 1 & 2 \\ 
+    \end{tabular}
+    \captionof{table}{Résultat de deux tirages}
+\end{center}
+
+\begin{center}
+    \begin{tabular}{c|c|c}
+        \textbf{Valeur de la somme} & \textbf{Fréquence d'apparition} & \textbf{Fréquence} \\
+        \hline 
+        0 & 1 & $1/4 = 0.25$ \\ 
+        1 & 2 & $1/2 = 0.5$ \\ 
+        2 & 1 & $1/4 = 0.25$ \\ 
+    \end{tabular}
+    \captionof{table}{Fréquences pour deux tirages}
+\end{center}
+
+Et ainsi de suite jusqu'à 4 lancers successifs, on obtient les sommes suivantes : 
+
+\begin{center}
+    \begin{tabular}{c|c|c}
+        \textbf{Valeur de la somme} & \textbf{Fréquence d'apparition} & \textbf{Fréquence} \\
+        \hline 
+        0 & 1 & 0.125 \\ 
+        1 & 3 & 0.375 \\ 
+        2 & 3 & 0.375 \\ 
+        3 & 1 & 0.125 \\ 
+    \end{tabular}
+    \captionof{table}{Fréquences pour 4 tirages}
+\end{center}
+
+On peut donc remarquer que, graphiquement, plus le nombre de lancers successifs augmente, plus la courbe 
+de fréquence se rapproche d'une courbe en cloche : la densité de la loi normale. 
+
+\begin{figure}[h]
+    \centering
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{images/courbe_tirages.png}
+        \caption{Fréquence d'apparition d'une valeur pour la somme de $1 \leqslant n \leqslant 4$ tirages}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \includegraphics[width=0.7\textwidth]{images/courbe_tirages_12.png}
+        \caption{\emph{Idem} pour $1 \leqslant n \leqslant 12$ tirages}
+    \end{subfigure}
+    \caption{Évolution de la fréquence d'apparition des sommes selon le nombre de tirages}
+\end{figure}
+
+Et cela pour n'importe quelle suite d'expériences aléatoires \emph{i.i.d}, la fréquence des sommes des issues obtenues 
+"tend" vers la loi normale graphiquement. On peut interpréter de façon plus intuitive cette distribution. 
+En effet, on peut se dire qu'il existe plus de façon d'effectuer un lancer qui se rapproche de la moyenne (centre de la courbe)
+plutôt qu'un lancer improbable (aux extrémitées de la courbe). D'où cette distribution en cloche. 
+
+\subsection{Théorème Central Limite}
+
+Formalisons et généralisons ce que nous venons de voir avec un exemple. 
+
+\begin{theorem}[Central Limite]
+    Soit $(X_n)_{n \in \N^*}$ une suite de variables aléatoires \emph{i.i.d} admettant une moyenne et 
+    une espérance telles que : 
+        \[ \mu = \E(X_1) \quad \sigma^2 = \V(X_1) \] 
+    Posons $S_n$ la somme des $n$ premières variables de la suite et $Y_n$ la variable centrée réduite de cette somme : 
+        \[ S_n = X_1 + \dots X_n \quad \text{et} \quad Y_n = \frac{S_n - n \mu}{\sigma \sqrt{n}} \]
+    Alors la suite $(Y_n)$ converge en loi vers la variables aléatoire de loi $ \mathcal{N}(0,1)$ 
+    (la loi normale centrée réduite) :
+        \[ \text{i.e } \quad \forall x \in \R, \quad \myP(Y_n \leqslant x) \underset{n \to \infty}{\longrightarrow} \frac{1}{\sqrt{2 \pi}} \int_{- \infty}^{x} e^{-u^2/2} \; du \] 
+\end{theorem}
+
